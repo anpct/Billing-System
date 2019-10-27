@@ -1,4 +1,5 @@
 import mysql.connector
+import datetime
 conn = mysql.connector.connect(
   host="sql12.freesqldatabase.com",
   user="sql12309921",
@@ -66,3 +67,11 @@ def get_cost(item):
         return rows[2]
     except Exception:
         return False
+
+
+def store(datetimev, username, total_cost):
+    sql = "INSERT INTO BILLS (datetime, eid, amount) VALUES ('{}', {}, {})".format(datetimev, username, total_cost)
+    cur.execute(sql)
+
+
+print(store(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 1, 40))

@@ -39,6 +39,7 @@ def get_bill(username):
     servicel.pack()
     total_costl.pack()
     reset.pack()
+    store(datetime.now(), username, total_cost)
     return t
 
 
