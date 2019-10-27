@@ -71,6 +71,5 @@ def get_cost(item):
 
 def store(datetimev, username, total_cost):
     sql = "INSERT INTO BILLS VALUES ('{}', {}, {})".format(datetimev, username, total_cost)
-    print(sql)
     cur.execute(sql)
     conn.commit()
