@@ -7,6 +7,56 @@ from datetime import datetime
 selected_items = []
 
 
+# Showing the list of sales
+def sal(tree):
+    tree.delete(*tree.get_children())
+    rows = get_all_sales()
+    for i in rows:
+        tree.insert("", 0, text=i[0], values=(i[1], i[2]))
+
+
+# List sales
+def sales(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    tree = ttk.Treeview(t)
+    b = Button(t, text="SHOW", command=lambda: sal(tree), fg="white", bg="#212121")
+    tree["columns"] = ("one", "two")
+    tree.heading("#0", text="DATE/TIME")
+    tree.heading("one", text="EMPLOYEE ID")
+    tree.heading("two", text="AMOUNT")
+    tree.column("#0", anchor=CENTER)  
+    tree.column("one", anchor=CENTER)  
+    tree.column("two", anchor=CENTER)
+    b.pack()
+    tree.pack()
+    return t
+
+
+# Showing the list of employees
+def s(tree):
+    tree.delete(*tree.get_children())
+    rows = get_all_employees()
+    for i in rows:
+        tree.insert("", 0, text=i[0], values=(i[1], i[3]))
+
+
+#List employees
+def list_emp(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    tree = ttk.Treeview(t)
+    b = Button(t, text="SHOW", command=lambda: s(tree), fg="white", bg="#212121")
+    tree["columns"] = ("one", "two")
+    tree.heading("#0", text="ID")
+    tree.heading("one", text="NAME")
+    tree.heading("two", text="PHNO")
+    tree.column("#0", anchor=CENTER)  
+    tree.column("one", anchor=CENTER)  
+    tree.column("two", anchor=CENTER)
+    b.pack()
+    tree.pack()
+    return t
+
+
 # Function for resetting the bill
 def resetf():
     global selected_items
@@ -166,7 +216,11 @@ def ad(username):
     ad.configure(bg="#212121")
     tab_main = ttk.Notebook(ad)
     t1 = admin_details(tab_main, username)
+    t2 = list_emp(tab_main, username)
+    t3 = sales(tab_main, username)
     tab_main.add(t1, text="ADMIN DETAILS")
+    tab_main.add(t2, text="EMPLOYEE DETAILS")
+    tab_main.add(t3, text="SALES")
     tab_main.pack(expand=1, fill='both')
 
 

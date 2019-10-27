@@ -73,3 +73,15 @@ def store(datetimev, username, total_cost):
     sql = "INSERT INTO BILLS VALUES ('{}', {}, {})".format(datetimev, username, total_cost)
     cur.execute(sql)
     conn.commit()
+
+
+def get_all_employees():
+    cur.execute("SELECT * FROM EMP_DETAILS")
+    rows = cur.fetchall()
+    return rows
+
+
+def get_all_sales():
+    cur.execute("SELECT * FROM BILLS")
+    rows = cur.fetchall()
+    return rows
