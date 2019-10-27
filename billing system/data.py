@@ -70,8 +70,7 @@ def get_cost(item):
 
 
 def store(datetimev, username, total_cost):
-    sql = "INSERT INTO BILLS (datetime, eid, amount) VALUES ('{}', {}, {})".format(datetimev, username, total_cost)
+    sql = "INSERT INTO BILLS VALUES ('{}', {}, {})".format(datetimev, username, total_cost)
+    print(sql)
     cur.execute(sql)
-
-
-print(store(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 1, 40))
+    conn.commit()
