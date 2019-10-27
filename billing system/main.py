@@ -7,6 +7,61 @@ from datetime import datetime
 selected_items = []
 
 
+# Validate and add item
+def ck_and_add_item(itemid, name, cost):
+    row = ck_item_exists(itemid)
+    if name and itemid.isnumeric() and cost.isnumeric() and row == None:
+        add_item_to_db_data(int(itemid), name, float(cost))
+    else:
+        popup("PLEASE ENTER VALID DETAILS")
+
+
+# Add items to database
+def add_item_to_db(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    l1 = Label(t, text="Enter item id: ", fg="white", bg="#212121")
+    e1 = Entry(t)
+    l2 = Label(t, text="Enter name: ", fg="white", bg="#212121")
+    e2 = Entry(t)
+    l3 = Label(t, text="Enter cost: ", fg="white", bg="#212121")
+    e3 = Entry(t)
+    b = Button(t, text="ADD", command= lambda:ck_and_add_item(e1.get(),e2.get(),e3.get()),
+     fg="white", bg="#212121")
+    l1.grid(row=0, column=0)
+    e1.grid(row=0, column=1)
+    l2.grid(row=1, column=0)
+    e2.grid(row=1, column=1)
+    l3.grid(row=2, column=0)
+    e3.grid(row=2, column=1)
+    b.grid(row=4, column=1)
+    return t
+
+
+# Showing the list of items
+def show_item_list(tree):
+    tree.delete(*tree.get_children())
+    rows = get_items()
+    for i in rows:
+        tree.insert("", 0, text=i[0], values=(i[1], i[2]))
+
+
+# List items
+def list_items(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    tree = ttk.Treeview(t)
+    b = Button(t, text="SHOW", command=lambda: show_item_list(tree), fg="white", bg="#212121")
+    tree["columns"] = ("one", "two")
+    tree.heading("#0", text="ID")
+    tree.heading("one", text="NAME")
+    tree.heading("two", text="COST")
+    tree.column("#0", anchor=CENTER)  
+    tree.column("one", anchor=CENTER)  
+    tree.column("two", anchor=CENTER)
+    b.pack()
+    tree.pack()
+    return t
+
+
 # Validate and add user
 def ck_and_add(username, name, password, phno):
     row = get_user_details(username)
@@ -217,7 +272,7 @@ def admin_details(tab_main, username):
 # POPUP for displaying errors
 def popup(msg):
     pop = Toplevel()
-    pop.geometry("150x60")
+    pop.geometry("200x60")
     pop.title("ERROR")
     pop.configure(bg="#212121")
     l = Label(pop, text=msg, fg="white", bg="#212121")
@@ -253,10 +308,14 @@ def ad(username):
     t2 = list_emp(tab_main, username)
     t3 = sales(tab_main, username)
     t4 = add_user(tab_main, username)
+    t5 = list_items(tab_main, username)
+    t6 = add_item_to_db(tab_main, username)
     tab_main.add(t1, text="ADMIN DETAILS")
     tab_main.add(t2, text="EMPLOYEE DETAILS")
     tab_main.add(t3, text="SALES")
     tab_main.add(t4, text="ADD USER")
+    tab_main.add(t5, text="SHOW ITEMS")
+    tab_main.add(t6, text="ADD ITEM")
     tab_main.pack(expand=1, fill='both')
 
 

@@ -91,3 +91,18 @@ def add_user_to_db(username, name, password, phno):
     sql = "INSERT INTO EMP_DETAILS VALUES ({}, '{}', '{}', {})".format(username, name, password, phno)
     cur.execute(sql)
     conn.commit()
+
+
+def ck_item_exists(id):
+    try:
+        cur.execute("SELECT * FROM ITEM_DETAILS WHERE IID='{}'".format(id))
+        row = cur.fetchone()
+        return row
+    except Exception:
+        return False
+
+
+def add_item_to_db_data(itemid, name, cost):
+    sql = "INSERT INTO ITEM_DETAILS VALUES ({}, '{}', {})".format(itemid, name, cost)
+    cur.execute(sql)
+    conn.commit()
