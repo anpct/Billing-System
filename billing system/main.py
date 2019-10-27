@@ -7,11 +7,13 @@ from datetime import datetime
 selected_items = []
 
 
+# Function for resetting the bill
 def resetf():
     global selected_items
     selected_items.clear()
 
 
+# Print/Show the bill
 def get_bill(username):
     cost = 0
     for i in selected_items:
@@ -43,18 +45,21 @@ def get_bill(username):
     return t
 
 
+# Add items to the bill
 def add_item(item, itemno):
     cost = get_cost(item)
     selected_items.append((item, itemno, cost))
     return
 
 
+# Show the various items added to the bill when refresh is clicked
 def two(tree):
     tree.delete(*tree.get_children())
     for row in selected_items:
         tree.insert("", 0, text=row[0], values=(row[1], row[2]))
 
 
+# Show the various items added to the bill
 def show_items(tab_main, username):
     t = Frame(tab_main, background="#212121")
     tree = ttk.Treeview(t)
@@ -75,6 +80,7 @@ def show_items(tab_main, username):
     return t
 
 
+# Billing section 
 def bill(tab_main, username):
     t = Frame(tab_main, background="#212121")
     rows = get_items()
@@ -98,6 +104,7 @@ def bill(tab_main, username):
     return t
 
 
+# Employee details
 def user_details(tab_main, username):
     t = Frame(tab_main, background="#212121")
     data = get_user_details(int(username))
@@ -110,6 +117,7 @@ def user_details(tab_main, username):
     return t
 
 
+# Admin details
 def admin_details(tab_main, username):
     t = Frame(tab_main, background="#212121")
     data = get_admin_details(int(username))
@@ -122,6 +130,7 @@ def admin_details(tab_main, username):
     return t
 
 
+# POPUP for displaying errors
 def popup(msg):
     pop = Toplevel()
     pop.geometry("150x60")
@@ -133,6 +142,7 @@ def popup(msg):
     exitb.pack()
 
 
+# Employee dashboard
 def ud(username):
     ud = Toplevel()
     ud.geometry("600x500")
@@ -148,6 +158,7 @@ def ud(username):
     tab_main.pack(expand=1, fill='both')
 
 
+# Admin dashboard
 def ad(username):
     ad = Toplevel()
     ad.geometry("500x700")
@@ -159,6 +170,7 @@ def ad(username):
     tab_main.pack(expand=1, fill='both')
 
 
+# Employee authentication
 def user_auth(username, password):
     if username and password and username.isnumeric():
         if ck_details_emp(int(username), password):
@@ -169,6 +181,7 @@ def user_auth(username, password):
         popup("ERROR WRONG DETAILS")
 
 
+# Admin authentication
 def admin_auth(username, password):
     if username and password and username.isnumeric():
         if ck_details_admin(int(username), password):
@@ -179,6 +192,7 @@ def admin_auth(username, password):
         popup("ERROR WRONG DETAILS")
 
 
+# Employee login
 def user_login():
     ul = Toplevel()
     ul.geometry("400x400")
@@ -196,6 +210,7 @@ def user_login():
     sb.grid(row=2, column=1)
 
 
+# Admin login
 def admin_login():
     al = Toplevel()
     al.geometry("500x600")
@@ -213,6 +228,7 @@ def admin_login():
     sb.grid(row=2, column=1)
 
 
+# Initial setup
 root = Tk()
 root.geometry("200x200")
 root.title("Restaurant Billing System")
