@@ -3,6 +3,33 @@ from data import *
 from tkinter import ttk
 
 
+selected_items = {}
+
+def add_item(item, itemno):
+    pass
+
+
+def bill(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    rows = get_items()
+    options = []
+    for i in rows:
+        options.append(i[1])
+    clicked = StringVar()
+    clicked.set(options[0])
+    cl = IntVar()
+    cl.set(1)
+    drop = OptionMenu(t, clicked, *options)
+    l = Label(t, text="SELECT QUANTITY:", fg="white", bg="#212121")
+    q = OptionMenu(t, cl, 1,2,3,4,5,6,7,8,9)
+    b = Button(t, text="ADD", command= lambda: add_item(clicked.get(), cl.get()), fg="white", bg="#212121")
+    drop.pack()
+    l.pack()
+    q.pack()
+    b.pack()
+    return t
+
+
 def user_details(tab_main, username):
     t = Frame(tab_main, background="#212121")
     data = get_user_details(int(username))
@@ -45,7 +72,9 @@ def ud(username):
     ud.configure(bg="#212121")
     tab_main = ttk.Notebook(ud)
     t1 = user_details(tab_main, username)
+    t2 = bill(tab_main, username)
     tab_main.add(t1, text="USER DETAILS")
+    tab_main.add(t2, text="BILLING")
     tab_main.pack(expand=1, fill='both')
 
 

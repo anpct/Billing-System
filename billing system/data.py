@@ -50,3 +50,11 @@ def get_admin_details(username):
     except Exception:
         return False
 
+
+def get_items():
+    try:
+        cur.execute("SELECT * FROM ITEM_DETAILS")
+        rows = cur.fetchall()
+        return rows
+    except Exception:
+        return False
