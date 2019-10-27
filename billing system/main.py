@@ -8,7 +8,8 @@ selected_items = []
 
 
 def resetf():
-    clear(selected_items)
+    global selected_items
+    selected_items.clear()
 
 
 def get_bill(username):
@@ -29,8 +30,7 @@ def get_bill(username):
     taxl = Label(t, text="TAX: "+str(tax), fg="white", bg="#212121")
     servicel = Label(t, text="SERVICE CHARGES: "+str(service), fg="white", bg="#212121")
     total_costl = Label(t, text="TOTAL COST: "+str(total_cost), fg="white", bg="#212121")
-    exitb = Button(t, text="EXIT", command=root.destroy())
-    reset = Button(t, text="RESET", command= lambda: resetf, fg="white", bg="#212121")
+    reset = Button(t, text="RESET", command= lambda: resetf(), fg="white", bg="#212121")
     date.pack()
     time.pack()
     emp.pack()
@@ -39,7 +39,6 @@ def get_bill(username):
     servicel.pack()
     total_costl.pack()
     reset.pack()
-    exitb.pack()
     return t
 
 
@@ -60,7 +59,7 @@ def show_items(tab_main, username):
     tree = ttk.Treeview(t)
     b = Button(t, text="REFRESH", command=lambda: two(tree), fg="white", bg="#212121")
     b2 = Button(t, text="SUBMIT", command=lambda: get_bill(username), fg="white", bg="#212121")
-    reset = Button(t, text="RESET", command= lambda: resetf, fg="white", bg="#212121")
+    reset = Button(t, text="RESET", command= lambda: resetf(), fg="white", bg="#212121")
     tree["columns"] = ("one", "two")
     tree.heading("#0", text="NAME")
     tree.heading("one", text="NO")
@@ -89,7 +88,7 @@ def bill(tab_main, username):
     l = Label(t, text="SELECT QUANTITY:", fg="white", bg="#212121")
     q = OptionMenu(t, cl, 1,2,3,4,5,6,7,8,9)
     b = Button(t, text="ADD", command= lambda: add_item(clicked.get(), cl.get()), fg="white", bg="#212121")
-    reset = Button(t, text="RESET", command= lambda: resetf, fg="white", bg="#212121")
+    reset = Button(t, text="RESET", command= lambda: resetf(), fg="white", bg="#212121")
     drop.pack()
     l.pack()
     q.pack()
