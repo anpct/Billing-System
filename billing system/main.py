@@ -3,10 +3,12 @@ from data import *
 from tkinter import ttk
 
 
-selected_items = {}
+selected_items = []
 
 def add_item(item, itemno):
-    pass
+    cost = get_cost(item)
+    selected_items.append((item, itemno))
+    return
 
 
 def bill(tab_main, username):

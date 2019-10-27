@@ -58,3 +58,11 @@ def get_items():
         return rows
     except Exception:
         return False
+
+def get_cost(item):
+    try:
+        cur.execute("SELECT * FROM ITEM_DETAILS WHERE NAME='{}'".format(item))
+        rows = cur.fetchone()
+        return rows[2]
+    except Exception:
+        return False
