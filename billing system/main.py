@@ -7,6 +7,30 @@ from datetime import datetime
 selected_items = []
 
 
+# Delete item
+def delete_item(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    l1 = Label(t, text="Enter item id: ", fg="white", bg="#212121")
+    e1 = Entry(t)    
+    b = Button(t, text="REMOVE", command= lambda: remove_item(int(e1.get())), fg="white", bg="#212121")
+    l1.grid(row=0, column=0)
+    e1.grid(row=0, column=1)
+    b.grid(row=2, column=1)
+    return t
+
+
+# Delete user
+def delete_user(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    l1 = Label(t, text="Enter user id: ", fg="white", bg="#212121")
+    e1 = Entry(t)    
+    b = Button(t, text="REMOVE", command= lambda: remove_user(int(e1.get())), fg="white", bg="#212121")
+    l1.grid(row=0, column=0)
+    e1.grid(row=0, column=1)
+    b.grid(row=2, column=1)
+    return t
+
+
 # Validate and add item
 def ck_and_add_item(itemid, name, cost):
     row = ck_item_exists(itemid)
@@ -300,7 +324,7 @@ def ud(username):
 # Admin dashboard
 def ad(username):
     ad = Toplevel()
-    ad.geometry("500x700")
+    ad.geometry("700x700")
     ad.title("ADMIN DASH")
     ad.configure(bg="#212121")
     tab_main = ttk.Notebook(ad)
@@ -310,12 +334,16 @@ def ad(username):
     t4 = add_user(tab_main, username)
     t5 = list_items(tab_main, username)
     t6 = add_item_to_db(tab_main, username)
+    t7 = delete_user(tab_main, username)
+    t8 = delete_item(tab_main, username)
     tab_main.add(t1, text="ADMIN DETAILS")
     tab_main.add(t2, text="EMPLOYEE DETAILS")
     tab_main.add(t3, text="SALES")
     tab_main.add(t4, text="ADD USER")
     tab_main.add(t5, text="SHOW ITEMS")
     tab_main.add(t6, text="ADD ITEM")
+    tab_main.add(t7, text="DELETE USER")
+    tab_main.add(t8, text="DELETE ITEM")
     tab_main.pack(expand=1, fill='both')
 
 

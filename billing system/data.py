@@ -106,3 +106,15 @@ def add_item_to_db_data(itemid, name, cost):
     sql = "INSERT INTO ITEM_DETAILS VALUES ({}, '{}', {})".format(itemid, name, cost)
     cur.execute(sql)
     conn.commit()
+
+
+def remove_user(username):
+    sql = "DELETE FROM EMP_DETAILS WHERE EID={}".format(username)
+    cur.execute(sql)
+    conn.commit()
+
+
+def remove_item(id):
+    sql = "DELETE FROM ITEM_DETAILS WHERE IID={}".format(id)
+    cur.execute(sql)
+    conn.commit()
