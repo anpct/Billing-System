@@ -118,8 +118,10 @@ root = Tk()
 root.geometry("350x100")
 root.title("Restaurant Billing System")
 root.configure(bg="#212121")
-adminB = Button(root, text="ADMIN", fg="white", bg="#212121", padx=16, pady=8, bd=5, width=10, anchor="center", command= admin_login)
-userB = Button(root, text="USER", fg="white", bg="#212121", padx=16, pady=8, bd=5, width=10, anchor="center", command= user_login)
+adminB = Button(root, text="ADMIN", fg="white", bg="#212121", padx=16, 
+pady=8, bd=5, width=10, anchor="center", command= admin_login)
+userB = Button(root, text="USER", fg="white", bg="#212121", padx=16, 
+pady=8, bd=5, width=10, anchor="center", command= user_login)
 adminB.pack()
 userB.pack()
 root.mainloop()
