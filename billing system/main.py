@@ -7,6 +7,40 @@ from datetime import datetime
 selected_items = []
 
 
+# Validate and add user
+def ck_and_add(username, name, password, phno):
+    row = get_user_details(username)
+    if name and password and username.isnumeric() and phno.isnumeric() and row == None:
+        add_user_to_db(int(username), name, password, int(phno))
+    else:
+        popup("PLEASE ENTER VALID DETAILS")
+
+
+# Add user
+def add_user(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    l1 = Label(t, text="Enter user id: ", fg="white", bg="#212121")
+    e1 = Entry(t)
+    l2 = Label(t, text="Enter name: ", fg="white", bg="#212121")
+    e2 = Entry(t)
+    l3 = Label(t, text="Enter user password: ", fg="white", bg="#212121")
+    e3 = Entry(t)
+    l4 = Label(t, text="Enter PHNO: ", fg="white", bg="#212121")
+    e4 = Entry(t)
+    b = Button(t, text="ADD", command= lambda:ck_and_add(e1.get(),e2.get(),e3.get(),e4.get()),
+     fg="white", bg="#212121")
+    l1.grid(row=0, column=0)
+    e1.grid(row=0, column=1)
+    l2.grid(row=1, column=0)
+    e2.grid(row=1, column=1)
+    l3.grid(row=2, column=0)
+    e3.grid(row=2, column=1)
+    l4.grid(row=3, column=0)
+    e4.grid(row=3, column=1)
+    b.grid(row=4, column=1)
+    return t
+
+
 # Showing the list of sales
 def sal(tree):
     tree.delete(*tree.get_children())
@@ -218,9 +252,11 @@ def ad(username):
     t1 = admin_details(tab_main, username)
     t2 = list_emp(tab_main, username)
     t3 = sales(tab_main, username)
+    t4 = add_user(tab_main, username)
     tab_main.add(t1, text="ADMIN DETAILS")
     tab_main.add(t2, text="EMPLOYEE DETAILS")
     tab_main.add(t3, text="SALES")
+    tab_main.add(t4, text="ADD USER")
     tab_main.pack(expand=1, fill='both')
 
 

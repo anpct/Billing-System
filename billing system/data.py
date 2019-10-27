@@ -85,3 +85,9 @@ def get_all_sales():
     cur.execute("SELECT * FROM BILLS")
     rows = cur.fetchall()
     return rows
+
+
+def add_user_to_db(username, name, password, phno):
+    sql = "INSERT INTO EMP_DETAILS VALUES ({}, '{}', '{}', {})".format(username, name, password, phno)
+    cur.execute(sql)
+    conn.commit()
