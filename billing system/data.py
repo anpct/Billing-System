@@ -54,7 +54,7 @@ def get_admin_details(username):
 
 def get_items():
     try:
-        cur.execute("SELECT * FROM ITEM_DETAILS")
+        cur.execute("SELECT * FROM ITEM_DETAILS ORDER BY IID ASC")
         rows = cur.fetchall()
         return rows
     except Exception:
@@ -76,7 +76,7 @@ def store(datetimev, username, total_cost):
 
 
 def get_all_employees():
-    cur.execute("SELECT * FROM EMP_DETAILS")
+    cur.execute("SELECT * FROM EMP_DETAILS ORDERBY BY EID ASC")
     rows = cur.fetchall()
     return rows
 
@@ -116,5 +116,11 @@ def remove_user(username):
 
 def remove_item(id):
     sql = "DELETE FROM ITEM_DETAILS WHERE IID={}".format(id)
+    cur.execute(sql)
+    conn.commit()
+
+
+def update_price(item_name, cost):
+    sql = "UPDATE ITEM_DETAILS SET COST={} WHERE NAME='{}'".format(cost, item_name)
     cur.execute(sql)
     conn.commit()

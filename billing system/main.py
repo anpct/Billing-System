@@ -7,6 +7,35 @@ from datetime import datetime
 selected_items = []
 
 
+# Check and edit price
+def ck_and_edit_price(item, price):
+    if item and price.isnumeric():
+        update_price(item, int(price))
+        popup("DONE")
+    else:
+        popup("PLEASE ENTER VALID DETAILS")
+
+
+# Change price of item
+def change_price_of_item(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    rows = get_items()
+    options = []
+    for i in rows:
+        options.append(i[1])
+    clicked = StringVar()
+    clicked.set(options[0])
+    drop = OptionMenu(t, clicked, *options)
+    l = Label(t, text="ENTER NEW PRICE:", fg="white", bg="#212121")
+    c = Entry(t)
+    b = Button(t, text="UPDATE PRICE", command= lambda: ck_and_edit_price(clicked.get(), c.get()), fg="white", bg="#212121")
+    drop.pack()
+    l.pack()
+    c.pack()
+    b.pack()
+    return t
+
+
 # Delete item
 def delete_item(tab_main, username):
     t = Frame(tab_main, background="#212121")
@@ -36,6 +65,7 @@ def ck_and_add_item(itemid, name, cost):
     row = ck_item_exists(itemid)
     if name and itemid.isnumeric() and cost.isnumeric() and row == None:
         add_item_to_db_data(int(itemid), name, float(cost))
+        popup("DONE")
     else:
         popup("PLEASE ENTER VALID DETAILS")
 
@@ -91,6 +121,7 @@ def ck_and_add(username, name, password, phno):
     row = get_user_details(username)
     if name and password and username.isnumeric() and phno.isnumeric() and row == None:
         add_user_to_db(int(username), name, password, int(phno))
+        popup("DONE")
     else:
         popup("PLEASE ENTER VALID DETAILS")
 
@@ -179,11 +210,13 @@ def resetf():
 # Print/Show the bill
 def get_bill(username):
     cost = 0
+    items = []
     for i in selected_items:
         cost = cost + i[2]
+        items.append(i[0])
     tax = round(cost * 0.2, 2)
     service = round(cost/99, 2)
-    total_cost = cost+tax+service
+    total_cost = round(cost+tax+service)
     t = Toplevel()
     t.geometry("350x200")
     t.title("BILL")
@@ -195,6 +228,7 @@ def get_bill(username):
     taxl = Label(t, text="TAX: "+str(tax), fg="white", bg="#212121")
     servicel = Label(t, text="SERVICE CHARGES: "+str(service), fg="white", bg="#212121")
     total_costl = Label(t, text="TOTAL COST: "+str(total_cost), fg="white", bg="#212121")
+    itemsll = Label(t, text="ITEMS: ("+", ".join(items)+")", fg="white", bg="#212121")
     reset = Button(t, text="RESET", command= lambda: resetf(), fg="white", bg="#212121")
     date.pack()
     time.pack()
@@ -203,6 +237,7 @@ def get_bill(username):
     taxl.pack()
     servicel.pack()
     total_costl.pack()
+    itemsll.pack()
     reset.pack()
     store(datetime.now(), username, total_cost)
     return t
@@ -297,7 +332,7 @@ def admin_details(tab_main, username):
 def popup(msg):
     pop = Toplevel()
     pop.geometry("200x60")
-    pop.title("ERROR")
+    pop.title("MESSAGE")
     pop.configure(bg="#212121")
     l = Label(pop, text=msg, fg="white", bg="#212121")
     exitb = Button(pop, text="OK", fg="white", bg="#212121", command= lambda: pop.destroy())
@@ -336,6 +371,7 @@ def ad(username):
     t6 = add_item_to_db(tab_main, username)
     t7 = delete_user(tab_main, username)
     t8 = delete_item(tab_main, username)
+    t9 = change_price_of_item(tab_main, username)
     tab_main.add(t1, text="ADMIN DETAILS")
     tab_main.add(t2, text="EMPLOYEE DETAILS")
     tab_main.add(t3, text="SALES")
@@ -344,6 +380,7 @@ def ad(username):
     tab_main.add(t6, text="ADD ITEM")
     tab_main.add(t7, text="DELETE USER")
     tab_main.add(t8, text="DELETE ITEM")
+    tab_main.add(t9, text="CHANGE PRICE")
     tab_main.pack(expand=1, fill='both')
 
 
