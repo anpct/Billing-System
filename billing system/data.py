@@ -76,7 +76,7 @@ def store(datetimev, username, total_cost):
 
 
 def get_all_employees():
-    cur.execute("SELECT * FROM EMP_DETAILS ORDERBY BY EID ASC")
+    cur.execute("SELECT * FROM EMP_DETAILS ORDER BY EID ASC")
     rows = cur.fetchall()
     return rows
 
