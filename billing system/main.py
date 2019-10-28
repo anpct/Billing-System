@@ -2,9 +2,11 @@ from tkinter import *
 from data import *
 from tkinter import ttk
 from datetime import datetime
+import random
 
 
 selected_items = []
+r = random.randint(10000,999999)
 
 
 # Check and edit price
@@ -36,16 +38,34 @@ def change_price_of_item(tab_main, username):
     return t
 
 
+# Check and delete item
+def exec_del_item(iid):
+    if iid.isnumeric():
+        remove_item(int(iid))
+        popup("DONE")
+    else:
+        popup("ENTER VALID DETAILS")
+
+
 # Delete item
 def delete_item(tab_main, username):
     t = Frame(tab_main, background="#212121")
     l1 = Label(t, text="Enter item id: ", fg="white", bg="#212121")
     e1 = Entry(t)    
-    b = Button(t, text="REMOVE", command= lambda: remove_item(int(e1.get())), fg="white", bg="#212121")
+    b = Button(t, text="REMOVE", command= lambda: exec_del_item(e1.get()), fg="white", bg="#212121")
     l1.grid(row=0, column=0)
     e1.grid(row=0, column=1)
     b.grid(row=2, column=1)
     return t
+
+
+# Check and delete user
+def exec_del_user(uid):
+    if uid.isnumeric():
+        remove_user(int(uid))
+        popup("DONE")
+    else:
+        popup("ENTER VALID DETAILS")
 
 
 # Delete user
@@ -53,7 +73,7 @@ def delete_user(tab_main, username):
     t = Frame(tab_main, background="#212121")
     l1 = Label(t, text="Enter user id: ", fg="white", bg="#212121")
     e1 = Entry(t)    
-    b = Button(t, text="REMOVE", command= lambda: remove_user(int(e1.get())), fg="white", bg="#212121")
+    b = Button(t, text="REMOVE", command= lambda: exec_del_user(e1.get()), fg="white", bg="#212121")
     l1.grid(row=0, column=0)
     e1.grid(row=0, column=1)
     b.grid(row=2, column=1)
@@ -156,7 +176,7 @@ def sal(tree):
     tree.delete(*tree.get_children())
     rows = get_all_sales()
     for i in rows:
-        tree.insert("", 0, text=i[0], values=(i[1], i[2]))
+        tree.insert("", 0, text=i[0], values=(i[1], i[2], i[3]))
 
 
 # List sales
@@ -164,13 +184,15 @@ def sales(tab_main, username):
     t = Frame(tab_main, background="#212121")
     tree = ttk.Treeview(t)
     b = Button(t, text="SHOW", command=lambda: sal(tree), fg="white", bg="#212121")
-    tree["columns"] = ("one", "two")
+    tree["columns"] = ("one", "two", "three")
     tree.heading("#0", text="DATE/TIME")
     tree.heading("one", text="EMPLOYEE ID")
     tree.heading("two", text="AMOUNT")
+    tree.heading("three", text="REFNO")
     tree.column("#0", anchor=CENTER)  
     tree.column("one", anchor=CENTER)  
     tree.column("two", anchor=CENTER)
+    tree.column("three", anchor=CENTER)
     b.pack()
     tree.pack()
     return t
@@ -204,7 +226,10 @@ def list_emp(tab_main, username):
 # Function for resetting the bill
 def resetf():
     global selected_items
+    global r
     selected_items.clear()
+    r = random.randint(10000,999999)
+
 
 
 # Print/Show the bill
@@ -223,6 +248,7 @@ def get_bill(username):
     t.configure(bg="#212121")
     date = Label(t, text="DATE: "+datetime.now().strftime("%d-%m-%Y"), fg="white", bg="#212121")
     time = Label(t, text="TIME: "+datetime.now().strftime("%H:%M"), fg="white", bg="#212121")
+    ref = Label(t, text="REF NO: "+str(r), fg="white", bg="#212121")
     emp = Label(t, text="EMPLOYEE ID: "+str(username), fg="white", bg="#212121")
     costl = Label(t, text="COST: "+str(cost), fg="white", bg="#212121")
     taxl = Label(t, text="TAX: "+str(tax), fg="white", bg="#212121")
@@ -232,6 +258,7 @@ def get_bill(username):
     reset = Button(t, text="RESET", command= lambda: resetf(), fg="white", bg="#212121")
     date.pack()
     time.pack()
+    ref.pack()
     emp.pack()
     costl.pack()
     taxl.pack()
@@ -239,7 +266,7 @@ def get_bill(username):
     total_costl.pack()
     itemsll.pack()
     reset.pack()
-    store(datetime.now(), username, total_cost)
+    store(datetime.now(), username, total_cost, r)
     return t
 
 
@@ -343,7 +370,7 @@ def popup(msg):
 # Employee dashboard
 def ud(username):
     ud = Toplevel()
-    ud.geometry("600x500")
+    ud.geometry("700x500")
     ud.title("USER DASH")
     ud.configure(bg="#212121")
     tab_main = ttk.Notebook(ud)
@@ -359,7 +386,7 @@ def ud(username):
 # Admin dashboard
 def ad(username):
     ad = Toplevel()
-    ad.geometry("700x700")
+    ad.geometry("900x700")
     ad.title("ADMIN DASH")
     ad.configure(bg="#212121")
     tab_main = ttk.Notebook(ad)

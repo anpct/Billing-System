@@ -10,6 +10,7 @@ conn = mysql.connector.connect(
 cur=conn.cursor()
 
 
+# Auth user
 def ck_details_emp(username, password):
     try:
         cur.execute("SELECT * FROM EMP_DETAILS WHERE EID='{}' AND PASSWORD='{}'".format(username, password))
@@ -22,6 +23,7 @@ def ck_details_emp(username, password):
         return False
 
 
+# Auth admin
 def ck_details_admin(username, password):
     try:
         cur.execute("SELECT * FROM ADMIN_DETAILS WHERE AID='{}' AND PASSWORD='{}'".format(username, password))
@@ -34,6 +36,7 @@ def ck_details_admin(username, password):
         return False
 
 
+# Get user details
 def get_user_details(username):
     try:
         cur.execute("SELECT EID, NAME, PHNO FROM EMP_DETAILS WHERE EID='{}'".format(username))
@@ -43,6 +46,7 @@ def get_user_details(username):
         return False
 
 
+# Get admin details
 def get_admin_details(username):
     try:
         cur.execute("SELECT AID, NAME, PHNO FROM ADMIN_DETAILS WHERE AID='{}'".format(username))
@@ -52,6 +56,7 @@ def get_admin_details(username):
         return False
 
 
+# Get all item details
 def get_items():
     try:
         cur.execute("SELECT * FROM ITEM_DETAILS ORDER BY IID ASC")
@@ -60,6 +65,8 @@ def get_items():
     except Exception:
         return False
 
+
+# Get cost of an item
 def get_cost(item):
     try:
         cur.execute("SELECT * FROM ITEM_DETAILS WHERE NAME='{}'".format(item))
@@ -69,30 +76,35 @@ def get_cost(item):
         return False
 
 
-def store(datetimev, username, total_cost):
-    sql = "INSERT INTO BILLS VALUES ('{}', {}, {})".format(datetimev, username, total_cost)
+# Store bill permanently
+def store(datetimev, username, total_cost, ref):
+    sql = "INSERT INTO BILLS VALUES ('{}', {}, {}, {})".format(datetimev.strftime("%d-%m-%Y  %H:%M"), username, total_cost, ref)
     cur.execute(sql)
     conn.commit()
 
 
+# Get all employees
 def get_all_employees():
     cur.execute("SELECT * FROM EMP_DETAILS ORDER BY EID ASC")
     rows = cur.fetchall()
     return rows
 
 
+# Get all sales
 def get_all_sales():
     cur.execute("SELECT * FROM BILLS")
     rows = cur.fetchall()
     return rows
 
 
+# Add user
 def add_user_to_db(username, name, password, phno):
     sql = "INSERT INTO EMP_DETAILS VALUES ({}, '{}', '{}', {})".format(username, name, password, phno)
     cur.execute(sql)
     conn.commit()
 
 
+# Check if item exists
 def ck_item_exists(id):
     try:
         cur.execute("SELECT * FROM ITEM_DETAILS WHERE IID='{}'".format(id))
@@ -102,24 +114,28 @@ def ck_item_exists(id):
         return False
 
 
+# Add item to database
 def add_item_to_db_data(itemid, name, cost):
     sql = "INSERT INTO ITEM_DETAILS VALUES ({}, '{}', {})".format(itemid, name, cost)
     cur.execute(sql)
     conn.commit()
 
 
+# Remove user from database
 def remove_user(username):
     sql = "DELETE FROM EMP_DETAILS WHERE EID={}".format(username)
     cur.execute(sql)
     conn.commit()
 
 
+# Remove item from database
 def remove_item(id):
     sql = "DELETE FROM ITEM_DETAILS WHERE IID={}".format(id)
     cur.execute(sql)
     conn.commit()
 
 
+# Update price of an item
 def update_price(item_name, cost):
     sql = "UPDATE ITEM_DETAILS SET COST={} WHERE NAME='{}'".format(cost, item_name)
     cur.execute(sql)
