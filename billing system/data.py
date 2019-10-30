@@ -10,7 +10,7 @@ conn = mysql.connector.connect(
 cur=conn.cursor()
 
 
-# Auth user
+# xyz
 def ck_details_emp(username, password):
     try:
         cur.execute("SELECT * FROM EMP_DETAILS WHERE EID='{}' AND PASSWORD='{}'".format(username, password))
