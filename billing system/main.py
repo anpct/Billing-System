@@ -3,6 +3,7 @@ from data import *
 from tkinter import ttk
 from datetime import datetime
 import random
+import os
 
 
 selected_items = []
@@ -479,6 +480,10 @@ adminB = Button(root, text="ADMIN", fg="white", bg="#212121", padx=16,
 pady=8, bd=5, width=10, anchor="center", command= admin_login)
 userB = Button(root, text="USER", fg="white", bg="#212121", padx=16, 
 pady=8, bd=5, width=10, anchor="center", command= user_login)
+canvas = Canvas(root, width = 300, height = 300)      
+canvas.pack()      
+img = PhotoImage(file="billing system\img\logo.png")      
+canvas.create_image(20,20, anchor=NW, image=img)   
 adminB.pack()
 userB.pack()
 root.mainloop()
