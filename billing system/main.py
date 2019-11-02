@@ -11,8 +11,7 @@ selected_items = []
 r = random.randint(10000,999999)
 
 
-# Show delete items
-# Showing the list of sales
+# Showing the list of deleted items
 def saldellist(tree):
     tree.delete(*tree.get_children())
     rows = get_all_deleted()
@@ -405,9 +404,16 @@ def user_details(tab_main, username):
     lname = Label(t, text="NAME: "+data[1], fg="white", bg="#212121")
     lid = Label(t, text="ID: "+str(data[0]), fg="white", bg="#212121")
     lphno = Label(t, text="PHNO: "+str(data[2]), fg="white", bg="#212121")
+    lname.config(font=("Courier", 34))
+    lid.config(font=("Courier", 34))
+    lphno.config(font=("Courier", 34))
     lname.pack()
     lid.pack()
     lphno.pack()
+    img = ImageTk.PhotoImage(Image.open(r"billing system\img\bill.jpg"))
+    panel = Label(t, image = img)
+    panel.photo = img
+    panel.pack()
     return t
 
 
@@ -418,9 +424,16 @@ def admin_details(tab_main, username):
     lname = Label(t, text="NAME: "+data[1], fg="white", bg="#212121")
     lid = Label(t, text="ID: "+str(data[0]), fg="white", bg="#212121")
     lphno = Label(t, text="PHNO: "+str(data[2]), fg="white", bg="#212121")
+    lname.config(font=("Courier", 44))
+    lid.config(font=("Courier", 44))
+    lphno.config(font=("Courier", 44))
     lname.pack()
     lid.pack()
     lphno.pack()
+    img = ImageTk.PhotoImage(Image.open(r"billing system\img\admin.png"))
+    panel = Label(t, image = img)
+    panel.photo = img
+    panel.pack()
     return t
 
 
@@ -509,7 +522,7 @@ def admin_auth(username, password):
 # Employee login
 def user_login():
     ul = Toplevel()
-    ul.geometry("400x400")
+    ul.geometry("250x100")
     ul.title("USER LOGIN")
     ul.configure(bg="#212121")
     l1= Label(ul, text="ENTER EID: ", fg="white", bg="#212121")
@@ -527,7 +540,7 @@ def user_login():
 # Admin login
 def admin_login():
     al = Toplevel()
-    al.geometry("500x600")
+    al.geometry("250x100")
     al.title("ADMIN LOGIN")
     al.configure(bg="#212121")
     l1= Label(al, text="ENTER AID: ", fg="white", bg="#212121")
@@ -555,5 +568,6 @@ adminB.grid(row= 0, column = 0)
 userB.grid(row= 1, column = 0)
 img = ImageTk.PhotoImage(Image.open(r"billing system\img\logo.jpg"))
 panel = Label(root, image = img)
+panel.photo = img
 panel.grid(row= 2, column = 0)
 root.mainloop()
