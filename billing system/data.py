@@ -140,3 +140,18 @@ def update_price(item_name, cost):
     sql = "UPDATE ITEM_DETAILS SET COST={} WHERE NAME='{}'".format(cost, item_name)
     cur.execute(sql)
     conn.commit()
+
+
+# Get all related sales
+def get_all_sales_related(username):
+    cur.execute("SELECT * FROM BILLS WHERE EID={}".format(username))
+    rows = cur.fetchall()
+    return rows
+
+
+# Delete bill from database
+def delete_bill_db(ref):
+    sql = "DELETE FROM BILLS WHERE REFNO={}".format(ref)
+    cur.execute(sql)
+    conn.commit()
+

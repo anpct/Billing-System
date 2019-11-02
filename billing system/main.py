@@ -3,11 +3,50 @@ from data import *
 from tkinter import ttk
 from datetime import datetime
 import random
-import os
 
 
 selected_items = []
 r = random.randint(10000,999999)
+
+
+# Check and delete bill
+def delete_bill(ref):
+    if ref and ref.isnumeric():
+        delete_bill_db(int(ref))
+        popup("DONE")
+    else:
+        popup("ENTER VALID DETAILS")
+
+
+# Showing the list of sales for specific user
+def sal_del(tree, username):
+    tree.delete(*tree.get_children())
+    rows = get_all_sales_related(int(username))
+    for i in rows:
+        tree.insert("", 0, text=i[0], values=(i[1], i[2], i[3]))
+
+
+# Remove bill
+def remove_bill(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    e = Entry(t)
+    b = Button(t, text="DELETE", fg="white", bg="#212121", command= lambda: delete_bill(e.get()))
+    e.pack()
+    b.pack()
+    tree = ttk.Treeview(t)
+    tree["columns"] = ("one", "two", "three")
+    tree.heading("#0", text="DATE/TIME")
+    tree.heading("one", text="EMPLOYEE ID")
+    tree.heading("two", text="AMOUNT")
+    tree.heading("three", text="REFNO")
+    tree.column("#0", anchor=CENTER)  
+    tree.column("one", anchor=CENTER)  
+    tree.column("two", anchor=CENTER)
+    tree.column("three", anchor=CENTER)
+    b = Button(t, text="SHOW", command=lambda: sal_del(tree, username), fg="white", bg="#212121")
+    b.pack()
+    tree.pack()
+    return t
 
 
 # Check and edit price
@@ -372,16 +411,18 @@ def popup(msg):
 # Employee dashboard
 def ud(username):
     ud = Toplevel()
-    ud.geometry("700x500")
+    ud.geometry("700x700")
     ud.title("USER DASH")
     ud.configure(bg="#212121")
     tab_main = ttk.Notebook(ud)
     t1 = user_details(tab_main, username)
     t2 = bill(tab_main, username)
     t3 = show_items(tab_main, username)
+    t4 = remove_bill(tab_main, username)
     tab_main.add(t1, text="USER DETAILS")
     tab_main.add(t2, text="BILLING")
     tab_main.add(t3, text="VIEW BILL")
+    tab_main.add(t4, text="REMOVE BILL")
     tab_main.pack(expand=1, fill='both')
 
 
@@ -480,10 +521,6 @@ adminB = Button(root, text="ADMIN", fg="white", bg="#212121", padx=16,
 pady=8, bd=5, width=10, anchor="center", command= admin_login)
 userB = Button(root, text="USER", fg="white", bg="#212121", padx=16, 
 pady=8, bd=5, width=10, anchor="center", command= user_login)
-canvas = Canvas(root, width = 300, height = 300)      
-canvas.pack()      
-img = PhotoImage(file="billing system\img\logo.png")      
-canvas.create_image(20,20, anchor=NW, image=img)   
 adminB.pack()
 userB.pack()
 root.mainloop()
