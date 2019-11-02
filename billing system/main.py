@@ -23,7 +23,7 @@ def sal_del(tree, username):
     tree.delete(*tree.get_children())
     rows = get_all_sales_related(int(username))
     for i in rows:
-        tree.insert("", 0, text=i[0], values=(i[1], i[2], i[3]))
+        tree.insert("", 0, text=i[0], values=(i[2], i[3]))
 
 
 # Remove bill
@@ -34,13 +34,11 @@ def remove_bill(tab_main, username):
     e.pack()
     b.pack()
     tree = ttk.Treeview(t)
-    tree["columns"] = ("one", "two", "three")
+    tree["columns"] = ("two", "three")
     tree.heading("#0", text="DATE/TIME")
-    tree.heading("one", text="EMPLOYEE ID")
     tree.heading("two", text="AMOUNT")
     tree.heading("three", text="REFNO")
     tree.column("#0", anchor=CENTER)  
-    tree.column("one", anchor=CENTER)  
     tree.column("two", anchor=CENTER)
     tree.column("three", anchor=CENTER)
     b = Button(t, text="SHOW", command=lambda: sal_del(tree, username), fg="white", bg="#212121")
@@ -411,7 +409,7 @@ def popup(msg):
 # Employee dashboard
 def ud(username):
     ud = Toplevel()
-    ud.geometry("700x700")
+    ud.geometry("700x500")
     ud.title("USER DASH")
     ud.configure(bg="#212121")
     tab_main = ttk.Notebook(ud)
