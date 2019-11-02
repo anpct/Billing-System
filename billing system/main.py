@@ -58,8 +58,10 @@ def sal_del(tree, username):
 # Remove bill
 def remove_bill(tab_main, username):
     t = Frame(tab_main, background="#212121")
+    l = Label(t, text="ENTER REFNO:", fg="white", bg="#212121")
     e = Entry(t)
     b = Button(t, text="DELETE", fg="white", bg="#212121", command= lambda: delete_bill(e.get()))
+    l.pack()
     e.pack()
     b.pack()
     tree = ttk.Treeview(t)
