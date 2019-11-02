@@ -116,42 +116,73 @@ def ck_item_exists(id):
 
 # Add item to database
 def add_item_to_db_data(itemid, name, cost):
-    sql = "INSERT INTO ITEM_DETAILS VALUES ({}, '{}', {})".format(itemid, name, cost)
-    cur.execute(sql)
-    conn.commit()
+    try:
+        sql = "INSERT INTO ITEM_DETAILS VALUES ({}, '{}', {})".format(itemid, name, cost)
+        cur.execute(sql)
+        conn.commit()
+    except Exception:
+        return False
 
 
 # Remove user from database
 def remove_user(username):
-    sql = "DELETE FROM EMP_DETAILS WHERE EID={}".format(username)
-    cur.execute(sql)
-    conn.commit()
+    try:
+        sql = "DELETE FROM EMP_DETAILS WHERE EID={}".format(username)
+        cur.execute(sql)
+        conn.commit()
+    except Exception:
+        return False
 
 
 # Remove item from database
 def remove_item(id):
-    sql = "DELETE FROM ITEM_DETAILS WHERE IID={}".format(id)
-    cur.execute(sql)
-    conn.commit()
+    try:
+        sql = "DELETE FROM ITEM_DETAILS WHERE IID={}".format(id)
+        cur.execute(sql)
+        conn.commit()
+    except Exception:
+        return False
 
 
 # Update price of an item
 def update_price(item_name, cost):
-    sql = "UPDATE ITEM_DETAILS SET COST={} WHERE NAME='{}'".format(cost, item_name)
-    cur.execute(sql)
-    conn.commit()
+    try:
+        sql = "UPDATE ITEM_DETAILS SET COST={} WHERE NAME='{}'".format(cost, item_name)
+        cur.execute(sql)
+        conn.commit()
+    except Exception:
+        return False
 
 
 # Get all related sales
 def get_all_sales_related(username):
-    cur.execute("SELECT * FROM BILLS WHERE EID={}".format(username))
-    rows = cur.fetchall()
-    return rows
+    try:
+        cur.execute("SELECT * FROM BILLS WHERE EID={}".format(username))
+        rows = cur.fetchall()
+        return rows
+    except Exception:
+        return False
 
 
 # Delete bill from database
 def delete_bill_db(ref):
-    sql = "DELETE FROM BILLS WHERE REFNO={}".format(ref)
-    cur.execute(sql)
-    conn.commit()
+    try:
+        sqlpre = "INSERT INTO DELETED_BILLS SELECT * FROM BILLS WHERE REFNO={}".format(ref)
+        cur.execute(sqlpre)
+        conn.commit()
+        sql = "DELETE FROM BILLS WHERE REFNO={}".format(ref)
+        cur.execute(sql)
+        conn.commit()
+    except Exception:
+        return False
 
+
+# Get all deleted bills
+def get_all_deleted():
+    try:
+        sql = "SELECT * FROM DELETED_BILLS ORDER BY DATETIME ASC"
+        cur.execute(sql)
+        rows = cur.fetchall()
+        return rows
+    except Exception:
+        return False

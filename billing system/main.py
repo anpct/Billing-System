@@ -3,10 +3,40 @@ from data import *
 from tkinter import ttk
 from datetime import datetime
 import random
+from PIL import ImageTk, Image
+import os
 
 
 selected_items = []
 r = random.randint(10000,999999)
+
+
+# Show delete items
+# Showing the list of sales
+def saldellist(tree):
+    tree.delete(*tree.get_children())
+    rows = get_all_deleted()
+    for i in rows:
+        tree.insert("", 0, text=i[0], values=(i[1], i[2], i[3]))
+
+
+# View deleted bills
+def deleted_bills(tab_main, username):
+    t = Frame(tab_main, background="#212121")
+    tree = ttk.Treeview(t)
+    b = Button(t, text="SHOW", command=lambda: saldellist(tree), fg="white", bg="#212121")
+    tree["columns"] = ("one", "two", "three")
+    tree.heading("#0", text="DATE/TIME")
+    tree.heading("one", text="EMPLOYEE ID")
+    tree.heading("two", text="AMOUNT")
+    tree.heading("three", text="REFNO")
+    tree.column("#0", anchor=CENTER)  
+    tree.column("one", anchor=CENTER)  
+    tree.column("two", anchor=CENTER)
+    tree.column("three", anchor=CENTER)
+    b.pack()
+    tree.pack()
+    return t
 
 
 # Check and delete bill
@@ -122,7 +152,7 @@ def delete_user(tab_main, username):
 def ck_and_add_item(itemid, name, cost):
     row = ck_item_exists(itemid)
     if name and itemid.isnumeric() and cost.isnumeric() and row == None:
-        add_item_to_db_data(int(itemid), name, float(cost))
+        add_item_to_db_data(int(itemid), name, int(cost))
         popup("DONE")
     else:
         popup("PLEASE ENTER VALID DETAILS")
@@ -440,6 +470,7 @@ def ad(username):
     t7 = delete_user(tab_main, username)
     t8 = delete_item(tab_main, username)
     t9 = change_price_of_item(tab_main, username)
+    t10 = deleted_bills(tab_main, username)
     tab_main.add(t1, text="ADMIN DETAILS")
     tab_main.add(t2, text="EMPLOYEE DETAILS")
     tab_main.add(t3, text="SALES")
@@ -449,6 +480,7 @@ def ad(username):
     tab_main.add(t7, text="DELETE USER")
     tab_main.add(t8, text="DELETE ITEM")
     tab_main.add(t9, text="CHANGE PRICE")
+    tab_main.add(t10, text="DELETED BILLS")
     tab_main.pack(expand=1, fill='both')
 
 
@@ -503,22 +535,25 @@ def admin_login():
     l2= Label(al, text="ENTER PASSWORD: ", fg="white", bg="#212121")
     e2= Entry(al, show="*")
     sb= Button(al, text= "LOGIN", fg="white", bg="#212121", command= lambda: admin_auth(e1.get(),e2.get()))
-    l1.grid(row=0, column=0)
-    e1.grid(row=0, column=1)
-    l2.grid(row=1, column=0)
-    e2.grid(row=1, column=1)
-    sb.grid(row=2, column=1)
+    l1.grid(row=1, column=0)
+    e1.grid(row=1, column=1)
+    l2.grid(row=2, column=0)
+    e2.grid(row=2, column=1)
+    sb.grid(row=3, column=1)
 
 
 # Initial setup
 root = Tk()
-root.geometry("200x200")
+root.geometry("1000x500")
 root.title("Restaurant Billing System")
 root.configure(bg="#212121")
-adminB = Button(root, text="ADMIN", fg="white", bg="#212121", padx=16, 
+adminB = Button(root, text="ADMIN", fg="white", bg="#1966ff", padx=16, 
 pady=8, bd=5, width=10, anchor="center", command= admin_login)
-userB = Button(root, text="USER", fg="white", bg="#212121", padx=16, 
+userB = Button(root, text="USER", fg="white", bg="#1966ff", padx=16, 
 pady=8, bd=5, width=10, anchor="center", command= user_login)
-adminB.pack()
-userB.pack()
+adminB.grid(row= 0, column = 0)
+userB.grid(row= 1, column = 0)
+img = ImageTk.PhotoImage(Image.open(r"billing system\img\logo.jpg"))
+panel = Label(root, image = img)
+panel.grid(row= 2, column = 0)
 root.mainloop()
