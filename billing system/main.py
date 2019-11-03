@@ -323,7 +323,6 @@ def get_bill(username):
     taxl = Label(t, text="TAX: "+str(tax), fg="white", bg="#212121")
     servicel = Label(t, text="SERVICE CHARGES: "+str(service), fg="white", bg="#212121")
     total_costl = Label(t, text="TOTAL COST: "+str(total_cost), fg="white", bg="#212121")
-    reset = Button(t, text="RESET", command= lambda: resetf(), fg="white", bg="#1966ff")
     date.pack()
     time.pack()
     ref.pack()
@@ -335,7 +334,6 @@ def get_bill(username):
     Label(t, text="ITEMS:", fg="white", bg="#212121").pack()
     for it in range(len(selected_items)):
         Label(t, text=selected_items[it][0] + "( X "+str(selected_items[it][1])+" )", fg="white", bg="#212121").pack()
-    reset.pack()
     if  total_cost:
         store(datetime.now(), username, total_cost, r)
     return t
