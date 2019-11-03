@@ -336,7 +336,8 @@ def get_bill(username):
     for it in range(len(selected_items)):
         Label(t, text=selected_items[it][0] + "( X "+str(selected_items[it][1])+" )", fg="white", bg="#212121").pack()
     reset.pack()
-    store(datetime.now(), username, total_cost, r)
+    if  total_cost:
+        store(datetime.now(), username, total_cost, r)
     return t
 
 
