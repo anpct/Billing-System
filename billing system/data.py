@@ -58,6 +58,7 @@ def get_admin_details(username):
 
 # Get all item details
 def get_items():
+
     try:
         cur.execute("SELECT * FROM ITEM_DETAILS ORDER BY IID ASC")
         rows = cur.fetchall()
