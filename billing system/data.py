@@ -186,4 +186,4 @@ def get_all_deleted():
         rows = cur.fetchall()
         return rows
     except Exception:
-        return False
+        return []
