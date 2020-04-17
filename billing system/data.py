@@ -1,10 +1,10 @@
 import mysql.connector
 import datetime
 conn = mysql.connector.connect(
-  host="sql12.freesqldatabase.com",
-  user="sql12312174",
-  passwd="Y9Xww3lres",
-  database="sql12312174",
+  host="****",
+  user="****",
+  passwd="****",
+  database="****",
   port=3306
 )
 cur=conn.cursor()
