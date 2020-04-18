@@ -19,3 +19,11 @@
  EXECUTION:
  
  python main.py
+
+ SCREENSHOTS:
+ 
+ ![1](https://i.ibb.co/fCJqbXz/Whats-App-Image-2020-04-18-at-1-49-30-PM.jpg)
+ 
+ ![2](https://i.ibb.co/9Gcf9mz/Whats-App-Image-2020-04-18-at-1-49-30-PM-2.jpg)
+ 
+ ![3](https://i.ibb.co/4MGRkfq/Whats-App-Image-2020-04-18-at-1-49-30-PM-1.jpg)
