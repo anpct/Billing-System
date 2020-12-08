@@ -98,16 +98,17 @@ def change_price_of_item(tab_main, username):
     for i in rows:
         options.append(i[1])
     clicked = StringVar()
-    clicked.set(options[0])
-    drop = OptionMenu(t, clicked, *options)
-    l = Label(t, text="ENTER NEW PRICE:", fg="white", bg="#212121")
-    c = Entry(t)
-    b = Button(t, text="UPDATE PRICE", command=lambda: ck_and_edit_price(
-        clicked.get(), c.get()), fg="white", bg="#1966ff")
-    drop.pack()
-    l.pack()
-    c.pack()
-    b.pack()
+    if(len(options)):
+        clicked.set(options[0])
+        drop = OptionMenu(t, clicked, *options)
+        l = Label(t, text="ENTER NEW PRICE:", fg="white", bg="#212121")
+        c = Entry(t)
+        b = Button(t, text="UPDATE PRICE", command=lambda: ck_and_edit_price(
+            clicked.get(), c.get()), fg="white", bg="#1966ff")
+        drop.pack()
+        l.pack()
+        c.pack()
+        b.pack()
     return t
 
 

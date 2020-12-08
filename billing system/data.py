@@ -1,10 +1,10 @@
 import mysql.connector
 import datetime
 conn = mysql.connector.connect(
-    host="****",
-    user="****",
-    passwd="****",
-    database="****",
+    host="====",
+    user="====",
+    passwd="====",
+    database="====",
     port=3306
 )
 cur = conn.cursor()

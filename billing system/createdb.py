@@ -1,9 +1,9 @@
 import mysql.connector
 conn = mysql.connector.connect(
-    host="****",
-    user="****",
-    passwd="****",
-    database="****",
+    host="====",
+    user="====",
+    passwd="====",
+    database="====",
     port=3306
 )
 cursor = conn.cursor()
