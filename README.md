@@ -16,10 +16,9 @@
  2. Execute the createdb.py file to create the required tables.
  3. Open the data.py file and edit the sql database details.
  
- FOR ADMIN:
- 
-Insert a row into ADMIN_DETAILS table manually with the details of the admin:
-`INSERT INTO ADMIN_DETAILS VALUES(1, "name", "password", 1234567891);`
+ DEFAULT ADMIN:
+AID: 1
+password: admin
  
  EXECUTION:
  
