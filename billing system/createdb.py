@@ -20,7 +20,4 @@ cursor.execute(
 sql = "INSERT INTO ADMIN_DETAILS VALUES (%s, %s, %s, %s)"
 val = (1, "admin", "admin", 1234567890)
 cursor.execute(sql, val)
-sql = "INSERT INTO ITEM_DETAILS VALUES (%s, %s, %s)"
-val = (1, "default", "default")
-cursor.execute(sql, val)
 conn.commit()
