@@ -1,19 +1,20 @@
 import mysql.connector
 import datetime
 conn = mysql.connector.connect(
-  host="****",
-  user="****",
-  passwd="****",
-  database="****",
-  port=3306
+    host="****",
+    user="****",
+    passwd="****",
+    database="****",
+    port=3306
 )
-cur=conn.cursor()
+cur = conn.cursor()
 
 
 # xyz
 def ck_details_emp(username, password):
     try:
-        cur.execute("SELECT * FROM EMP_DETAILS WHERE EID='{}' AND PASSWORD='{}'".format(username, password))
+        cur.execute(
+            "SELECT * FROM EMP_DETAILS WHERE EID='{}' AND PASSWORD='{}'".format(username, password))
         row = cur.fetchone()
         if row != None:
             return True
@@ -26,7 +27,8 @@ def ck_details_emp(username, password):
 # Auth admin
 def ck_details_admin(username, password):
     try:
-        cur.execute("SELECT * FROM ADMIN_DETAILS WHERE AID='{}' AND PASSWORD='{}'".format(username, password))
+        cur.execute(
+            "SELECT * FROM ADMIN_DETAILS WHERE AID='{}' AND PASSWORD='{}'".format(username, password))
         row = cur.fetchone()
         if row != None:
             return True
@@ -39,7 +41,8 @@ def ck_details_admin(username, password):
 # Get user details
 def get_user_details(username):
     try:
-        cur.execute("SELECT EID, NAME, PHNO FROM EMP_DETAILS WHERE EID='{}'".format(username))
+        cur.execute(
+            "SELECT EID, NAME, PHNO FROM EMP_DETAILS WHERE EID='{}'".format(username))
         row = cur.fetchone()
         return row
     except Exception:
@@ -49,7 +52,8 @@ def get_user_details(username):
 # Get admin details
 def get_admin_details(username):
     try:
-        cur.execute("SELECT AID, NAME, PHNO FROM ADMIN_DETAILS WHERE AID='{}'".format(username))
+        cur.execute(
+            "SELECT AID, NAME, PHNO FROM ADMIN_DETAILS WHERE AID='{}'".format(username))
         row = cur.fetchone()
         return row
     except Exception:
@@ -79,7 +83,8 @@ def get_cost(item):
 
 # Store bill permanently
 def store(datetimev, username, total_cost, ref):
-    sql = "INSERT INTO BILLS VALUES ('{}', {}, {}, {})".format(datetimev.strftime("%d-%m-%Y  %H:%M"), username, total_cost, ref)
+    sql = "INSERT INTO BILLS VALUES ('{}', {}, {}, {})".format(
+        datetimev.strftime("%d-%m-%Y  %H:%M"), username, total_cost, ref)
     cur.execute(sql)
     conn.commit()
 
@@ -100,7 +105,8 @@ def get_all_sales():
 
 # Add user
 def add_user_to_db(username, name, password, phno):
-    sql = "INSERT INTO EMP_DETAILS VALUES ({}, '{}', '{}', {})".format(username, name, password, phno)
+    sql = "INSERT INTO EMP_DETAILS VALUES ({}, '{}', '{}', {})".format(
+        username, name, password, phno)
     cur.execute(sql)
     conn.commit()
 
@@ -118,7 +124,8 @@ def ck_item_exists(id):
 # Add item to database
 def add_item_to_db_data(itemid, name, cost):
     try:
-        sql = "INSERT INTO ITEM_DETAILS VALUES ({}, '{}', {})".format(itemid, name, cost)
+        sql = "INSERT INTO ITEM_DETAILS VALUES ({}, '{}', {})".format(
+            itemid, name, cost)
         cur.execute(sql)
         conn.commit()
     except Exception:
@@ -148,7 +155,8 @@ def remove_item(id):
 # Update price of an item
 def update_price(item_name, cost):
     try:
-        sql = "UPDATE ITEM_DETAILS SET COST={} WHERE NAME='{}'".format(cost, item_name)
+        sql = "UPDATE ITEM_DETAILS SET COST={} WHERE NAME='{}'".format(
+            cost, item_name)
         cur.execute(sql)
         conn.commit()
     except Exception:
@@ -168,7 +176,8 @@ def get_all_sales_related(username):
 # Delete bill from database
 def delete_bill_db(ref):
     try:
-        sqlpre = "INSERT INTO DELETED_BILLS SELECT * FROM BILLS WHERE REFNO={}".format(ref)
+        sqlpre = "INSERT INTO DELETED_BILLS SELECT * FROM BILLS WHERE REFNO={}".format(
+            ref)
         cur.execute(sqlpre)
         conn.commit()
         sql = "DELETE FROM BILLS WHERE REFNO={}".format(ref)
