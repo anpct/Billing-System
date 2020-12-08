@@ -315,7 +315,7 @@ def get_bill(username):
     cost = 0
     items = []
     for i in selected_items:
-        cost = cost + i[2]
+        cost = cost + int(i[2])
         items.append(i[0])
     tax = round(cost * 0.2, 2)
     service = round(cost/99, 2)
