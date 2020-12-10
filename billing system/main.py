@@ -400,21 +400,22 @@ def bill(tab_main, username):
     for i in rows:
         options.append(i[1])
     clicked = StringVar()
-    clicked.set(options[0])
-    cl = IntVar()
-    cl.set(1)
-    drop = OptionMenu(t, clicked, *options)
-    l = Label(t, text="SELECT QUANTITY:", fg="white", bg="#212121")
-    q = OptionMenu(t, cl, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-    b = Button(t, text="ADD", command=lambda: add_item(
-        clicked.get(), cl.get()), fg="white", bg="#1966ff")
-    reset = Button(t, text="RESET", command=lambda: resetf(),
-                   fg="white", bg="#1966ff")
-    drop.pack()
-    l.pack()
-    q.pack()
-    b.pack()
-    reset.pack()
+    if(len(options)):
+        clicked.set(options[0])
+        cl = IntVar()
+        cl.set(1)
+        drop = OptionMenu(t, clicked, *options)
+        l = Label(t, text="SELECT QUANTITY:", fg="white", bg="#212121")
+        q = OptionMenu(t, cl, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        b = Button(t, text="ADD", command=lambda: add_item(
+            clicked.get(), cl.get()), fg="white", bg="#1966ff")
+        reset = Button(t, text="RESET", command=lambda: resetf(),
+                       fg="white", bg="#1966ff")
+        drop.pack()
+        l.pack()
+        q.pack()
+        b.pack()
+        reset.pack()
     return t
 
 
